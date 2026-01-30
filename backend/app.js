@@ -17,7 +17,7 @@ app.use(cors({
 
 app.use("/api/v2/user",userRoutes)
 
-app.use("/",(req,res)=>{
+app.use("/api",(req,res)=>{
     res.send("Hello World")
 })
 

@@ -106,9 +106,44 @@ const LoginUser = asyncHandler(async (req, res) => {
 });
 
 const LogoutUser=asyncHandler(async(req,res)=>{
-  
+  res.clearCookie("accessToken")
+  res.clearCookie("refreshToken")
+
+  return res
+  .status(200)
+  .json(new ApiResponse(
+        200,
+        "User logout successfully"
+      ))
 })
 
+const getUser=asyncHandler(async(req,res)=>{
+   return res
+    .status(200)
+    .json(new ApiResponse(
+        200,
+        req.user,
+        "User fetched successfully"
+    ))
+})
+
+const getAllUser=asyncHandler(async(req,res)=>{
+  const user=await User.find({}).select("-password -refreshToken")
+
+  if(!user){
+    throw new ApiError(401,"User is Not getting")
+  }
+
+  return res.status(200).json(
+    new ApiResponse(200,
+      user,
+      "Get All User"
+    )
+  )
+
+})
+
+
 export {
-  registerUser,LoginUser,LogoutUser
+  registerUser,LoginUser,LogoutUser,getUser,getAllUser
 } 

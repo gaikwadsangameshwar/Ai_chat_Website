@@ -25,6 +25,11 @@ const UserSchema=new Schema( {
     refreshToken: {
         type: String,
         select: false,
+    },
+    role:{
+        type:String,
+        enum:["user","admin"],
+        default:"user"
     }
     },{
     timestamps:true
